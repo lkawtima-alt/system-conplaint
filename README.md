@@ -1,20 +1,52 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
-</div>
 
-# Run and deploy your AI Studio app
+# PEA Complaint System (Vite Version)
 
-This contains everything you need to run your app locally.
+This is a web application for submitting and managing customer complaints for the Provincial Electricity Authority (PEA), built with React, Vite, and Tailwind CSS.
 
-View your app in AI Studio: https://ai.studio/apps/drive/1NP9FIcCE3LU02EFCppPGWKpIfAuedM4J
+## Getting Started
 
-## Run Locally
+Follow these steps to get the development environment running.
 
-**Prerequisites:**  Node.js
+### 1. Prerequisites
 
+- Node.js (v18 or later)
+- npm or yarn
 
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+### 2. Installation
+
+First, install the project dependencies:
+
+```bash
+npm install
+```
+
+### 3. Environment Variables
+
+This project requires a Google Gemini API key to function correctly.
+
+1.  Create a new file named `.env.local` in the root of the project.
+2.  Add your API key to this file, prefixed with `VITE_`:
+
+    ```
+    VITE_API_KEY=YOUR_GEMINI_API_KEY_HERE
+    ```
+
+    Replace `YOUR_GEMINI_API_KEY_HERE` with your actual key from Google AI Studio.
+
+### 4. Running the Development Server
+
+Once the installation is complete and the environment variable is set, you can run the application:
+
+```bash
+npm run dev
+```
+
+Open [http://localhost:5173](http://localhost:5173) (or whatever port Vite assigns) with your browser to see the result.
+
+### 5. Deployment on Vercel
+
+This application is ready to be deployed on Vercel. 
+1. Push your code to a Git repository (GitHub, GitLab, etc.).
+2. Connect your repository to Vercel. Vercel will automatically detect that it's a Vite project.
+3. In your Vercel project's settings, go to "Environment Variables" and add your Gemini API key with the name `VITE_API_KEY`.
+4. Deploy. Vercel will handle the build process for you.

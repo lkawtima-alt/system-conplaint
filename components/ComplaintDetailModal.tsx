@@ -21,6 +21,18 @@ const ComplaintDetailModal: React.FC<ComplaintDetailModalProps> = ({ isOpen, onC
     setIsLoadingAi(false);
   };
   
+  const formatSummary = (text: string) => {
+    // A simple markdown to HTML converter for bold and unordered lists
+    const html = text
+      .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>') // Bold
+      .replace(/^\s*-\s(.*)/gm, '<li>$1</li>') // List items
+      .replace(/(\<li\>.*\<\/li\>)/gs, '<ul>$1</ul>') // Wrap lists in <ul>
+      .replace(/\n/g, '<br />') // Newlines
+      .replace(/<br \/><ul>/g, '<ul>') // Fix extra space before lists
+      .replace(/<\/ul><br \/>/g, '</ul>');
+    return { __html: html };
+  };
+
   if (!isOpen) return null;
 
   return (
@@ -28,7 +40,7 @@ const ComplaintDetailModal: React.FC<ComplaintDetailModalProps> = ({ isOpen, onC
       <div className="bg-white rounded-lg shadow-2xl w-full max-w-3xl max-h-[90vh] flex flex-col">
         <div className="flex justify-between items-center p-4 border-b">
           <h2 className="text-xl font-bold text-purple-800">Complaint Details: {complaint.id}</h2>
-          <button onClick={onClose} className="text-gray-500 hover:text-gray-800">&times;</button>
+          <button onClick={onClose} className="text-gray-500 hover:text-gray-800 text-2xl leading-none">&times;</button>
         </div>
 
         <div className="p-6 overflow-y-auto grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -44,7 +56,7 @@ const ComplaintDetailModal: React.FC<ComplaintDetailModalProps> = ({ isOpen, onC
               <h3 className="font-semibold text-gray-700">Issue Details</h3>
               <p className="text-gray-600"><strong>Category:</strong> {complaint.category}</p>
               <p className="text-gray-600"><strong>Location:</strong> {complaint.location}</p>
-              <p className="text-gray-600"><strong>Description:</strong> {complaint.description}</p>
+              <p className="text-gray-600"><strong>Description:</strong> <span className="whitespace-pre-wrap">{complaint.description}</span></p>
             </div>
              {complaint.photo && (
               <div>
@@ -60,9 +72,9 @@ const ComplaintDetailModal: React.FC<ComplaintDetailModalProps> = ({ isOpen, onC
             <button onClick={handleGenerateSummary} disabled={isLoadingAi} className="w-full bg-purple-600 text-white px-4 py-2 rounded-md hover:bg-purple-700 transition-colors disabled:bg-gray-400">
               {isLoadingAi ? 'Generating...' : 'Generate Summary & Actions'}
             </button>
-            <div className="mt-4 text-sm text-gray-800 space-y-2 prose max-w-none">
-              {isLoadingAi && <p>Thinking...</p>}
-              {aiSummary && aiSummary.split('\n').map((line, index) => <p key={index}>{line.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')}</p>)}
+            <div className="mt-4 text-sm text-gray-800 space-y-2 prose max-w-none prose-sm">
+              {isLoadingAi && <p className="animate-pulse">Analyzing complaint...</p>}
+              {aiSummary && <div dangerouslySetInnerHTML={formatSummary(aiSummary)} />}
             </div>
           </div>
         </div>
