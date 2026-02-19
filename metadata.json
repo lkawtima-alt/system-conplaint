@@ -1,0 +1,7 @@
+{
+  "name": "PEA Complaint System",
+  "description": "A web application for submitting and managing customer complaints for the Provincial Electricity Authority (PEA). Users can file complaints with details and photos, and administrators can track, update, and get AI-powered summaries for each case.",
+  "requestFramePermissions": [
+    "camera"
+  ]
+}
