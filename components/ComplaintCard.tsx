@@ -33,10 +33,10 @@ const ComplaintCard: React.FC<ComplaintCardProps> = ({ complaint, onStatusUpdate
         {status !== ComplaintStatus.Resolved && (
           <select
             onChange={(e) => onStatusUpdate(id, e.target.value as ComplaintStatus)}
-            value={status}
+            value=""
             className="flex-1 text-sm bg-orange-500 text-white px-3 py-1.5 rounded-md hover:bg-orange-600 transition-colors focus:outline-none focus:ring-2 focus:ring-orange-400"
           >
-            <option value={status} disabled>Update Status</option>
+            <option value="" disabled>Update Status</option>
             {Object.values(ComplaintStatus).map(s => (
                 s !== status && <option key={s} value={s}>{s}</option>
             ))}
